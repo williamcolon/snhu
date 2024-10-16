@@ -19,186 +19,208 @@
 #include <fstream>
 #include <sstream>
 
-// Struct to represent an Appointment with relevant details
+// Structure representing an Appointment with relevant properties
 struct Appointment {
-    std::string name;        // Name of the person for the appointment
-    std::string date;        // Date formatted as YYYY-MM-DD
-    std::string time;        // Time formatted as HH:MM
-    std::string description; // Brief description of the appointment
+    std::string clientName;    // Name of the individual for the appointment
+    std::string appointmentDate; // Date formatted as YYYY-MM-DD
+    std::string appointmentTime; // Time formatted as HH:MM
+    std::string details;        // Brief overview of the appointment
 };
 
-// The AppointmentService class manages a collection of appointments
-class AppointmentService {
+// The AppointmentManager class oversees a list of appointments
+class AppointmentManager {
 private:
-    std::vector<Appointment> appointments; // Vector to store added appointments
-    const std::string filename = "appointment.csv"; // Filename for CSV storage
+    std::vector<Appointment> scheduledAppointments; // Vector to hold appointments
+    const std::string storageFile = "appointments.csv"; // File for saving and loading appointments
 
-    // Function to validate date input
-    bool validateDate(const std::string& date) {
-        return std::regex_match(date, std::regex(R"(\d{4}-\d{2}-\d{2})")); // Checks if date matches YYYY-MM-DD format
+    // Validates date input format
+    bool isDateValid(const std::string& date) {
+        return std::regex_match(date, std::regex(R"(\d{4}-\d{2}-\d{2})")); // Checks date format
     }
 
-    // Function to validate time input
-    bool validateTime(const std::string& time) {
-        return std::regex_match(time, std::regex(R"(\d{2}:\d{2})")); // Checks if time matches HH:MM format
+    // Validates time input format
+    bool isTimeValid(const std::string& time) {
+        return std::regex_match(time, std::regex(R"(\d{2}:\d{2})")); // Checks time format
     }
 
-    // Function to save appointments to CSV file
-    void saveToCSV() {
-        std::ofstream file(filename, std::ios::app); // Opens file in append mode
-        for (const auto& appointment : appointments) {
-            // Writes each appointment's details as a comma-separated line in the CSV file
-            file << appointment.name << "," << appointment.date << "," << appointment.time << "," << appointment.description << "\n";
+    // Saves appointments to the designated CSV file
+    void writeToCSV() {
+        std::ofstream file(storageFile, std::ios::app); // Opens file in append mode
+        for (const auto& appointment : scheduledAppointments) {
+            file << appointment.clientName << "," << appointment.appointmentDate << ","
+                << appointment.appointmentTime << "," << appointment.details << "\n";
         }
     }
 
-    // Function to load appointments from CSV file
-    void loadFromCSV() {
-        std::ifstream file(filename); // Opens file for reading
+    // Loads appointments from the CSV file
+    void readFromCSV() {
+        std::ifstream file(storageFile); // Opens file for reading
         std::string line;
         while (std::getline(file, line)) {
-            std::istringstream s(line);
+            std::istringstream lineStream(line);
             Appointment appointment;
             std::string field;
 
-            std::getline(s, appointment.name, ','); // Reads name field until a comma
-            std::getline(s, appointment.date, ','); // Reads date field until a comma
-            std::getline(s, appointment.time, ','); // Reads time field until a comma
-            std::getline(s, appointment.description, ','); // Reads description field until a comma
+            std::getline(lineStream, appointment.clientName, ','); // Reads name field until a comma
+            std::getline(lineStream, appointment.appointmentDate, ','); // Reads date field until a comma
+            std::getline(lineStream, appointment.appointmentTime, ','); // Reads time field until a comma
+            std::getline(lineStream, appointment.details, ','); // Reads description field until a comma
 
-            appointments.push_back(appointment); // Adds the loaded appointment to the vector
+            scheduledAppointments.push_back(appointment); // Adds loaded appointment to the list
         }
     }
 
 public:
-    AppointmentService() {
-        loadFromCSV(); // Load existing appointments from the CSV file on initialization
+    AppointmentManager() {
+        readFromCSV(); // Loads existing appointments upon initialization
     }
 
-    // Function to add a new appointment
-    void addAppointment() {
-        Appointment appointment; // Create an Appointment object to store user input
+    // Creates a new appointment based on user input
+    void createAppointment() {
+        Appointment appointment; // Create an Appointment object for user input
 
-        std::cout << "Enter name: ";
-        std::getline(std::cin, appointment.name); // Reads the name input from the user
+        std::cout << "Enter client name: ";
+        std::getline(std::cin, appointment.clientName); // Reads client's name
 
-        // Input validation for the appointment date
-        std::string date;
+        // Validate appointment date
+        std::string dateInput;
         while (true) {
-            std::cout << "Enter date (YYYY-MM-DD): ";
-            std::getline(std::cin, date); // Reads the date input from the user
-            if (validateDate(date)) {
-                appointment.date = date; // Assign valid date to the appointment
-                break; // Exit loop if date is valid
+            std::cout << "Enter appointment date (YYYY-MM-DD): ";
+            std::getline(std::cin, dateInput); // Reads the date input from the user
+            if (isDateValid(dateInput)) {
+                appointment.appointmentDate = dateInput; // Assigns valid date
+                break;
             }
-            std::cout << "Invalid date format. Please try again.\n"; // Prompt for re-entry if date is invalid
+            std::cout << "Incorrect date format. Please try again.\n"; // Prompt for re-entry if date is invalid
         }
 
-        // Input validation for the appointment time
-        std::string time;
+        // Validate appointment time
+        std::string timeInput;
         while (true) {
-            std::cout << "Enter time (HH:MM): ";
-            std::getline(std::cin, time); // Reads the time input from the user
-            if (validateTime(time)) {
-                appointment.time = time; // Assign valid time to the appointment
-                break; // Exit loop if time is valid
+            std::cout << "Enter appointment time (HH:MM): ";
+            std::getline(std::cin, timeInput);
+            if (isTimeValid(timeInput)) {
+                appointment.appointmentTime = timeInput; // Assigns valid time
+                break;
             }
-            std::cout << "Invalid time format. Please try again.\n"; // Prompt for re-entry if time is invalid
+            std::cout << "Incorrect time format. Please try again.\n"; // Prompt for re-entry if time is invalid
         }
 
-        std::cout << "Enter description: ";
-        std::getline(std::cin, appointment.description); // Reads the description input from the user
+        std::cout << "Enter appointment details: ";
+        std::getline(std::cin, appointment.details); // Reads appointment details
 
-        appointments.push_back(appointment); // Adds the new appointment to the vector
-        saveToCSV(); // Save updated appointments to CSV
+        scheduledAppointments.push_back(appointment); // Adds new appointment to the list
+        writeToCSV(); // Saves the updated list of appointments to CSV
         std::cout << "Appointment added successfully!\n"; // Confirmation message
     }
 
-    // Function to display all scheduled appointments
-    void displayAppointments() const {
-        if (appointments.empty()) {
-            std::cout << "No appointments scheduled.\n"; // Message if there are no appointments
+    // Displays all scheduled appointments
+    void showAppointments() const {
+        if (scheduledAppointments.empty()) {
+            std::cout << "No appointments found.\n";
             return;
         }
-        std::cout << "Scheduled Appointments:\n";
-        for (const auto& appointment : appointments) {
-            // Displays each appointment's details
-            std::cout << "Name: " << appointment.name
-                << ", Date: " << appointment.date
-                << ", Time: " << appointment.time
-                << ", Description: " << appointment.description << "\n";
+        std::cout << "Upcoming Appointments:\n";
+        for (const auto& appointment : scheduledAppointments) {
+            std::cout << "Client Name: " << appointment.clientName
+                << ", Date: " << appointment.appointmentDate
+                << ", Time: " << appointment.appointmentTime
+                << ", Details: " << appointment.details << "\n";
         }
     }
 
-    // Function to clear all appointments
-    void clearAppointments() {
-        appointments.clear(); // Clears the vector of appointments
-        std::ofstream file(filename, std::ios::trunc); // Truncates the CSV file, effectively clearing its content
-        std::cout << "All appointments cleared.\n"; // Confirmation message
+    // Removes all appointments from the manager
+    void removeAllAppointments() {
+        scheduledAppointments.clear(); // Clears the appointment list
+        std::ofstream file(storageFile, std::ios::trunc); // Clears the CSV file content
+        std::cout << "All appointments have been removed.\n";
     }
 
-    // Function to delete a specific appointment by name
-    void deleteAppointment() {
-        std::string name;
-        std::cout << "Enter the name of the appointment you wish to delete: ";
-        std::getline(std::cin, name); // Reads the name of the appointment to delete
+    // Removes a specific appointment by client name
+    void removeAppointment() {
+        std::string clientName;
+        std::cout << "Enter the client name of the appointment to remove: ";
+        std::getline(std::cin, clientName); // Reads the name of the appointment to delete
 
-        // Removes the appointment from the vector based on the name
-        auto it = std::remove_if(appointments.begin(), appointments.end(),
-            [&name](const Appointment& app) { return app.name == name; });
+        // Remove appointment from the list
+        auto it = std::remove_if(scheduledAppointments.begin(), scheduledAppointments.end(),
+            [&clientName](const Appointment& app) { return app.clientName == clientName; });
 
-        if (it != appointments.end()) {
-            appointments.erase(it, appointments.end()); // Erases the matching appointments from the vector
-            std::ofstream file(filename, std::ios::trunc); // Clears the CSV file
-            saveToCSV(); // Resaves remaining appointments to the CSV file
-            std::cout << "Appointment deleted successfully.\n"; // Confirmation message
+        if (it != scheduledAppointments.end()) {
+            scheduledAppointments.erase(it, scheduledAppointments.end()); // Deletes matching appointments
+            std::ofstream file(storageFile, std::ios::trunc); // Clears the CSV file
+            writeToCSV(); // Resave remaining appointments to CSV
+            std::cout << "Appointment removed successfully.\n"; // Confirmation message
         }
         else {
-            std::cout << "No appointment found for the name: " << name << "\n"; // Message if no matching appointment is found
+            std::cout << "No appointment found for client: " << clientName << "\n"; // Message if no matching appointment is found
         }
     }
 };
 
+// The main function serves as the user interface for the appointment manager
+//In this program, we define two classes: Appointment, which stores details of an individual appointment (title and date),
+// and AppointmentService, which manages a collection of appointments.
+// The AppointmentService class provides two key methods:
+// addAppointment to append a new appointment to the list and displayAppointments to output all scheduled appointments to the console. 
+//In the main function, we instantiate the AppointmentService, add some sample appointments, 
+// and display them, showcasing how the service can be effectively used for appointment management.
+
 int main() {
-    std::cout << "William Colon Scheduler\n"; // Display title
-    AppointmentService service; // Create an instance of AppointmentService
-    int choice;
+    std::cout << "Welcome to the Appointment Scheduler\n William Colon\n\n"; // Welcome message
+    AppointmentManager manager; // Creates an instance of the AppointmentManager
+    int userChoice;
     do {
-        // Display menu options for the user
-        std::cout << "1. Add Appointment\n2. Display Appointments\n3. Clear Appointments\n4. Delete Appointment\n5. Exit\n";
-        std::cout << "Enter your choice: ";
-        std::cin >> choice; // Reads user choice
+        // Display menu options for user
+        std::cout << "1. Create Appointment\n2. Show Appointments\n3. Remove All Appointments\n4. Remove Appointment\n5. Exit\n";
+        std::cout << "Select an option: ";
+        std::cin >> userChoice; // Reads user choice
         std::cin.ignore(); // Ignore the newline character left in the buffer
 
-        switch (choice) {
+        switch (userChoice) {
         case 1:
-            service.addAppointment(); // Calls function to add an appointment
+            manager.createAppointment(); // Calls function to add an appointment
             break;
         case 2:
-            service.displayAppointments(); // Calls function to display all appointments
+            manager.showAppointments(); // Calls function to display all appointments
             break;
         case 3:
-            service.clearAppointments(); // Calls function to clear all appointments
+            manager.removeAllAppointments(); // Calls function to clear all appointments
             break;
         case 4:
-            service.deleteAppointment(); // Calls function to delete a specific appointment
+            manager.removeAppointment(); // Calls function to delete a specific appointment
             break;
         case 5:
-            std::cout << "Exiting the appointment service.\n"; // Exit message
+            std::cout << "Thank you for using the appointment scheduler.\n"; // Exit message
             break;
         default:
-            std::cout << "Invalid choice. Please try again.\n"; // Message for invalid choice
+            std::cout << "Invalid option. Please try again.\n"; // Message for invalid choice
         }
-    } while (choice != 5); // Continue until user chooses to exit
+    } while (userChoice != 5); // Continue until user chooses to exit
 
     return 0; // Return statement indicating successful execution
 }
 
-///   - **addAppointment()**: This function performs several validation checks on the input. The time to execute is relatively constant due to the loops being dependent on user input. In the worst-case scenario, the function will keep prompting until valid input is received. Therefore, the average time complexity is O(n) where n is the number of attempts made to enter valid data.
+///
+
+// Address Optimization
+//  - The CSV file operations for loading and saving appointments could use optimizations to reduce redundant file writes, especially in the `deleteAppointment` method.
+//  - Instead of writing to the CSV far too frequently and in a truncating manner, consider batch processing and writing changes after a batch operation, or when the application is closed.
+//  - Use a more efficient data structure if searching for appointments becomes a frequent operation, such as a map for fast lookups by name.
+//  - Avoid file I/O in performance-critical paths by storing data temporarily in memory and writing to file less frequently.
+
+// Time Complexity
+//    - **addAppointment()**: This function performs several validation checks on the input. The time to execute is relatively constant due to the loops being dependent on user input. In the worst-case scenario, the function will keep prompting until valid input is received. Therefore, the average time complexity is O(n) where n is the number of attempts made to enter valid data.
 //    - **displayAppointments()**: This function iterates through the vector of appointments. The time complexity is O(m), where m is the number of appointments in the vector, as it must print out each appointment detail.
 //    - **clearAppointments()**: This function clears the vector and has a time complexity of O(1) since it just clears the vector without iterating through it.
 //    - **saveToCSV()**: The function saves appointments to the CSV file, having a time complexity of O(m), where m is the number of appointments being saved.
 //    - **loadFromCSV()**: This function loads appointments from the CSV file with a complexity of O(m) as it reads all the entries from the file.
 //    - **Main Function**: The menu system is a simple do-while loop that runs until the user opts to exit. The complexity of this function is O(1) for each menu operation but could vary based on the options selected by the user.
 //    This refined code structure is clear and efficient, with a focus on best practices for user input validation and displaying results accordingly.
+
+// Efficiency of Algorithmic Logic
+//  - The logic for input validation is efficient with regex, although it could be slightly optimized if date or time checks become increasingly complex by utilizing date parsing libraries.
+//  - The use of a vector for storage provides a dynamic array feature, which is suitable for the current use case but may need to switch to a more complex data structure as requirements grow.
+//  - While the current design is straightforward, further structural changes may enhance performance and usability if extended with more features like searching or sorting appointments. 
+
 /// 
