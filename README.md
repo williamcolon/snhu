@@ -1,32 +1,29 @@
-My skills in programming languages, object-oriented design, and database management were pivotal during this enhancement project. 
-Specifically, I improved the functionality of the appointment scheduling system by integrating a robust database, utilizing CSV format for data storage and retrieval.
-This choice not only streamlined data handling but also facilitated ease of use and improved data integrity. Through careful planning and execution, 
-I showcased my ability to craft scalable solutions while adhering to best practices in software development, ultimately enhancing both the user experience and the application's efficiency.
+William Colon
+7-1 Final Project
+Professional Self-Assessment
 
 
-The artifact is an Appointment Scheduling Software created as part of my coursework in CS-499, completed on October 1, 2024. 
-The software is designed to automate the booking and management of appointments for service providers, offering users the ability to add, 
-view, and clear appointments effectively.
-This artifact is included in my ePortfolio to demonstrate my programming capabilities and understanding of software development processes. 
-I selected this item because it encompasses many essential skills I have acquired, such as object-oriented programming, data validation, 
-file I/O operations, and user interaction management. I included this artifact in my ePortfolio to showcase my proficiency in designing and implementing functional software 
-that addresses real-world problems. Throughout the development of the appointment scheduling system, I deeply engaged with various programming concepts and best practices, 
-which strengthened my understanding in several key areas.
-The artifact showcases my ability to create a structured codebase using a class (`AppointmentService`), 
-validation techniques for ensuring correct user input, and file management capabilities through the use of a CSV for data persistence.
-Additionally, the user interface is designed to be intuitive, reflecting my focus on user-centered design principles.
-The iterative process of refining the software not only enhanced my coding skills but also taught me valuable lessons about user experience design.
-I carefully considered how users would interact with the system, leading me to implement input validation and a clear, user-friendly interface. 
-This reflection on usability emphasized the importance of not just writing code, but crafting a tool that genuinely meets user needs.
 
-Furthermore, working with file I/O to store and retrieve appointment data in a CSV format improved my understanding of data management. 
-This aspect of the project solidified my grasp of reading from and writing to files, a critical skill in software development, 
-especially when dealing with persistent data. The code has been enhanced by including data storage capabilities, allowing for persistent data management through a CSV file.
-This was a significant improvement over a purely in-memory approach. Furthermore, input validation was implemented to prevent incorrect data entries, 
-enhancing the robustness of the application.
-The enhancement process involved continuous learning, particularly in areas of file handling.
-Faced with challenges such as debugging validation logic and ensuring data integrity in CSV submissions, 
-I learned the importance of thorough testing and iteration in software development. The experience highlighted the critical role of user feedback in improving the software,
-which I plan to incorporate in future projects.
-I met the course outcomes I planned to address, particularly in terms of developing a comprehensive software solution and implementing best practices in design and coding. 
-I learned more about maintaining code quality and ensuring user inputs are validated, solidifying my foundational skills.
+
+I have documented my ePortfolio development procedures in this repository as the capstone project for the CS499 Computer Science Capstone course. One of the most effective visual communication tools for demonstrating our value to potential employers is the development of a professional portfolio that highlights my unique abilities and talents. The ePortfolio's content serves as a reliable foundation for the development of concise concepts that demonstrate my proficiency in the fundamental areas of computer science. The artifacts of certain courses in the Computer Science Program that are included in this document demonstrate my progression in the critical areas of software design/engineering, algorithms and data structures, and databases. 
+
+I could showcase my abilities in one category and illustrate them in other critical categories through the use of certain artifacts. The artifacts selected have been improved and presented beyond the course requirements as an individual program practice. This has established a high quality of work, addressed their limitations or inconsistencies, and mitigated vulnerabilities. The portfolio suggests that I am highly motivated, well-organized, and accomplished in the field of Computer Science with a specialization in Software Engineering.
+
+
+
+Self-Introduction
+This is an informative self-introduction regarding the concepts of computer science courses that are relevant to my personal experiences is presented in this paper. It involves the exchange of personal opinions and perspectives, as well as a more in-depth and reflective engagement with course concepts and materials.
+Career Choice
+This presentation discusses my vocational decision and future aspirations as influenced by the Computer Science program. It reflects on the reasons for my sustained consistency in career planning and the evolution of my career perspective. I provide commentary on research regarding my career choices and their influence on my thought processes.
+
+Reflection
+ This reflects on my experiences during the tasks of the CS499 Computer Science Capstone course. I elaborate on how I achieved the five-course goals by refining the artifacts in my ePortfolio, culminating in the successful creation of a professional ePortfolio that highlights my knowledge, skills, and competencies acquired from the Computer Science degree.
+ Artifact
+ I conduct a video code review for each artifact chosen in my original plan. In this code assessment, I outline my strategy for improvements. These code reviews entail an examination of current code and proposed improvements, highlighting the following essential components for each category:
+
+Design and Engineering
+ This document serves as a narrative accompanying the artifact enhancements for software design and engineering. This elucidates the rationale for the inclusion of the chosen artifact in this ePortfolio category and contemplates the methodology employed in its creation. The story emphasizes the knowledge acquired during the artifact's construction. The artifact exemplifies our capacity to employ creative skills and strategies for executing design solutions and achieving objectives. The capacity to develop solutions for software logic issues and rectify potential security design vulnerabilities.
+Data Structure and Algorithms
+ The artifact upgrades for algorithms and data structures are accompanied by a story in this study. This elucidates the rationale for the inclusion of the chosen artifact in this ePortfolio category and contemplates the methodology employed in its creation. The story emphasizes the learning acquired throughout the artifact's construction. The artifact encompasses design elements for authenticating and authorizing a user within the monitoring system, predicated on user credentials and the responsibility of user interactions with various module screens and activities, contingent upon their position in the monitoring system.
+Databases
+ This serves as a narrative accompanying the upgrades of database artifacts. This elucidates the rationale for the inclusion of the chosen artifact in this category of our ePortfolio and contemplates the methodology employed in its creation. The story emphasizes the knowledge acquired during the artifact's construction.
